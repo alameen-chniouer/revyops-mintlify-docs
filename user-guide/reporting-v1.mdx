@@ -1,0 +1,84 @@
+---
+title: Reporting (v1)
+description: Campaign performance reporting with deliverability and dashboard views.
+---
+
+## Overview
+
+Reporting v1 is the classic reporting interface. It presents campaign performance across all connected platforms in a single table view with filters, sorting, and comparison tools.
+
+## Tabs
+
+The reporting page has three tabs:
+
+<CardGroup cols={3}>
+  <Card title="Campaigns" icon="chart-bar">
+    Campaign-level performance metrics across all platforms
+  </Card>
+  <Card title="Deliverability" icon="envelope-circle-check">
+    Sending domain and inbox health metrics
+  </Card>
+  <Card title="Dashboards" icon="gauge">
+    Saved dashboard views
+  </Card>
+</CardGroup>
+
+---
+
+## Campaigns Tab
+
+### Filters
+
+| Filter | Description |
+|---|---|
+| **Sequencers** | Filter by sending platform (Instantly, SmartLead, Lemlist, EmailBison, PlusVibe) |
+| **Campaigns** | Search and select specific campaigns |
+| **Date Range** | Filter activity to a specific date window |
+| **Data Type** | Toggle between webhook data and API-synced data |
+
+### Metrics
+
+Each campaign row shows:
+
+| Metric | Description |
+|---|---|
+| **Sent** | Total outbound emails sent |
+| **New Prospects** | First-time contacts added to the campaign |
+| **Old Prospects** | Re-engaged contacts already in your workspace |
+| **Replies** | Total inbound replies received |
+| **Interested** | Replies marked as interested |
+| **Bounces** | Emails that bounced |
+| **Reply Rate** | Replies ÷ Sent |
+| **Interested Rate** | Interested ÷ Sent |
+| **Bounce Rate** | Bounces ÷ Sent |
+| **Disposition Breakdown** | Reply sub-categories (e.g. Not Now, Wrong Person, Out of Office) |
+
+### Sorting
+
+Click any column header to sort. Available sort fields include:
+
+- Launch Date
+- Reply Rate
+- Interested Rate
+- Bounce Rate
+- Total Sent
+- Interested Count
+
+### Campaign Notes
+
+Admins can attach notes to any campaign — useful for tracking strategy changes, client feedback, or context about a campaign's performance. Notes are visible to all workspace members.
+
+### Archiving Campaigns
+
+Admins can archive campaigns to hide them from the default view. Archived campaigns remain accessible via a toggle but are excluded from aggregate metrics.
+
+### Campaign Comparison
+
+Select two campaigns and switch to **Comparison Mode** to view their metrics side by side.
+
+---
+
+## Deliverability Tab
+
+See [Deliverability](/user-guide/deliverability) for full documentation.
+

@@ -1,0 +1,141 @@
+---
+title: Reporting (v2)
+description: Advanced campaign analytics with time series charts, smart views, drilldowns, and A/B variable reporting.
+---
+
+## Overview
+
+Reporting v2 is a complete redesign of the reporting experience. It adds time series charts, a smart filter system with saved views, contact-level drilldowns, and a persistent layout that remembers your preferences.
+
+---
+
+## Key Improvements Over v1
+
+| Feature | v1 | v2 |
+|---|---|---|
+| Time series charts | — | Daily / weekly / monthly |
+| Saved filter views | — | Smart Views |
+| Contact drilldown | Basic | Full panel with email thread |
+| Filter persistence | — | State preserved across sessions |
+| Metrics visibility | Fixed | Configurable — show/hide/reorder |
+| Funnel steps | — | Customisable funnel config |
+| Benchmarks panel | — | Side-by-side benchmark comparison |
+
+---
+
+## Metrics
+
+All v1 metrics are available in v2, plus:
+
+| Metric | Description |
+|---|---|
+| **Time Series** | Sends, replies, interested plotted over time (daily / weekly / monthly) |
+| **Funnel View** | Configurable step-by-step funnel from sent → interested |
+| **Aggregate Cards** | Top-level KPIs across all selected campaigns |
+
+---
+
+## Filters
+
+The filter system in v2 supports multi-dimensional filtering:
+
+- **Platform (Sequencer)** — filter by Instantly, SmartLead, Lemlist, EmailBison, PlusVibe
+- **Campaigns** — search and select individual campaigns
+- **Date Range** — window for all activity metrics
+- **Date Grouping** — aggregate time series by day, week, or month
+
+Active filters are shown as chips at the top of the page. Remove any filter individually or clear all at once.
+
+---
+
+## Smart Views
+
+Smart Views let you save any filter combination as a named view and reload it instantly.
+
+**To save a view:**
+1. Set your filters the way you want
+2. Click **Save View**
+3. Give it a name (e.g. "Q1 Instantly Campaigns")
+
+Saved views appear in the sidebar. Clicking one instantly restores all filters, date ranges, and metric visibility preferences.
+
+<Tip>
+  Create a Smart View for each client or campaign type you review regularly — this eliminates repetitive filter setup.
+</Tip>
+
+---
+
+## Campaign Breakdown Table
+
+The campaign breakdown table shows all campaigns matching your filters with full metric columns. You can:
+
+- Sort by any metric
+- Search by campaign name
+- Select campaigns for comparison
+- Archive or add notes (admins only)
+
+### Disposition Breakdown
+
+Expand any campaign to see how replies are categorised: Not Now, Wrong Person, Out of Office, Interested, etc. This data is synced from your sending platform's reply classification.
+
+---
+
+## Contact Drilldown
+
+Click into any campaign metric (sends, replies, bounces, interested) to open the **Data Panel** — a slide-out showing every individual contact in that metric bucket.
+
+From the Data Panel you can:
+
+- Search contacts by name, email, or company
+- Switch between **Contacts** and **Companies** grouping
+- Click any contact to view the full email thread
+
+### Email Thread View
+
+The email thread shows every outbound email and inbound reply for that contact, across all campaigns. Timestamps, subject lines, and full email bodies are included.
+
+---
+
+## Variable Report (A/B Testing)
+
+The Variable Report lets you analyse performance across **tracking variables** — custom tags you embed in campaigns to identify variants (e.g. persona, offer, subject line).
+
+### How It Works
+
+1. Select 1–3 tracking variables to compare (e.g. `tracking_persona`, `tracking_offer`)
+2. Choose which values to include per variable, or select "All Variants"
+3. RevyOps groups all matching emails by variable combination and calculates metrics for each group
+
+### Metrics
+
+| Metric | Description |
+|---|---|
+| **Combinations Found** | Number of unique variable value combinations |
+| **Total Sent** | Emails sent for each combination |
+| **Unique Prospects** | Distinct contacts reached |
+| **Reply Rate** | Replies ÷ Sent |
+| **Interested Rate** | Interested ÷ Sent |
+| **Bounce Rate** | Bounces ÷ Sent |
+| **Rank** | Combinations ranked by interested rate (1st = best) |
+
+### Filters
+
+The variable report supports additional minimum thresholds to exclude low-volume combinations from skewing results:
+
+| Filter | Description |
+|---|---|
+| **Min Sends** | Only include combinations with at least N sends |
+| **Min Replies** | Only include combinations with at least N replies |
+| **Min Interested** | Only include combinations with at least N interested replies |
+| **Min Bounces** | Only include combinations with at least N bounces |
+| **Max Ratio** | Exclude combinations with a ratio worse than 1:X |
+
+<Note>
+  Tracking variables must be set on your campaigns in the sending platform before they will appear in the variable report. Variable fields follow the naming convention `tracking_*`.
+</Note>
+
+---
+
+## Benchmarks Panel
+
+Open the Benchmarks panel alongside your campaign data to compare your performance against reference benchmarks. This is useful for identifying campaigns that are significantly above or below your typical baseline.

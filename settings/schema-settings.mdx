@@ -1,0 +1,92 @@
+---
+title: Schema Settings
+description: Define and enforce a master custom field schema across all client workspaces in your agency.
+---
+
+## Overview
+
+Schema Settings let you manage a **master custom field schema** at the agency level. This schema defines which custom fields are allowed on contacts and companies across all client workspaces under your agency.
+
+This is the central place to standardise the data structure across clients — ensuring every workspace uses consistent field names, types, and conventions.
+
+---
+
+## Custom Field Schema
+
+Your agency maintains two separate schemas:
+
+<CardGroup cols={2}>
+  <Card title="Contacts Schema" icon="user">
+    Custom fields that can be added to contact records
+  </Card>
+  <Card title="Companies Schema" icon="building">
+    Custom fields that can be added to company records
+  </Card>
+</CardGroup>
+
+### Standard Fields (Read-Only)
+
+Each schema includes a set of built-in standard fields that cannot be removed:
+
+**Contacts:**
+- `email` — primary identifier
+- `linkedin_url` — used as a fallback identifier when email is unavailable
+- `first_name`
+- `last_name`
+- `company_id`
+- `origin` — which platform the contact came from
+- `contact_status`
+
+**Companies:**
+- `domain` — primary identifier
+- `company_status`
+
+Standard fields are shown in the schema view but cannot be edited or deleted.
+
+### Custom Fields
+
+Below the standard fields, you can define any number of custom fields. These appear on every contact or company record across all client workspaces subject to the enforcement mode (see below).
+
+---
+
+## Enforcement Mode
+
+Schema Settings supports two enforcement modes that control how custom fields are handled when data arrives from integrations:
+
+<CardGroup cols={2}>
+  <Card title="Flexible Mode" icon="toggle-off">
+    **Default.** Any custom field can be created. Fields that don't match the master schema are flagged for review — you can then choose to add them to the schema, keep them as client-specific, or delete them.
+  </Card>
+  <Card title="Strict Mode" icon="shield-check">
+    Only fields that exist in the master schema are accepted. Any field not in the schema is rejected at ingestion time. Use this when you need tight data governance across all clients.
+  </Card>
+</CardGroup>
+
+### When to Use Strict Mode
+
+Use strict mode when:
+- You have a fixed data model and don't want ad-hoc fields polluting records
+- You're feeding data downstream into a CRM or data warehouse with a defined schema
+- Multiple team members are configuring integrations and you need guardrails
+
+Use flexible mode when:
+- You're onboarding new clients and still discovering what fields they need
+- You want to review and normalise fields before locking the schema down
+
+---
+
+## Managing Non-Conforming Fields (Flexible Mode)
+
+In flexible mode, when an integration sends a custom field that isn't in the master schema, RevyOps flags it. From the Schema Settings page you can action each flagged field:
+
+| Action | Description |
+|---|---|
+| **Add to Schema** | Promote it to the master schema so all clients can use it |
+| **Keep Client-Specific** | Allow it only for that client, without adding it to the master |
+| **Delete** | Remove the field from all records |
+
+---
+
+## Real-Time Sync
+
+Schema settings are stored and synced in real time via Firestore. Changes take effect immediately across all client workspaces — no deployment or restart required.

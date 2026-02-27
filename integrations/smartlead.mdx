@@ -1,0 +1,56 @@
+---
+title: SmartLead
+description: Connect SmartLead to RevyOps to track campaign activity in real time.
+---
+
+## Prerequisites
+
+- An active SmartLead account
+- Your RevyOps `client_id` (find it under **Settings → Workspace**)
+
+## Webhook Setup
+
+<Steps>
+  <Step title="Open SmartLead Settings">
+    In SmartLead, navigate to **Settings → Webhooks**.
+  </Step>
+  <Step title="Add a New Webhook">
+    Enter the RevyOps webhook URL:
+
+    ```
+    https://api.revyops.com/public/smartlead-webhook/{client_id}
+    ```
+
+    Replace `{client_id}` with your RevyOps workspace ID.
+  </Step>
+  <Step title="Select Events">
+    Enable the following events:
+    - `Email Sent`
+    - `Email Reply`
+    - `Email Bounced`
+    - `Unsubscribed`
+    - `Lead Category Changed`
+  </Step>
+  <Step title="Save and Test">
+    Save the webhook configuration and send a test payload to verify connectivity.
+  </Step>
+</Steps>
+
+## Agency Setup (Global Webhook)
+
+```
+https://api.revyops.com/public/global-smartlead-webhook/{agency_id}
+```
+
+## Data Mapped
+
+| SmartLead Field | RevyOps Field |
+|---|---|
+| `to_email` | Contact email |
+| `campaign_id` | Campaign ID |
+| `campaign_name` | Campaign name |
+| `first_name` | Contact first name |
+| `last_name` | Contact last name |
+| `company_name` | Company name |
+| `type` | Email type (OUTBOUND / INBOUND / BOUNCED) |
+| `category` | Lead category / disposition |

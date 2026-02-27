@@ -1,0 +1,58 @@
+---
+title: Instantly
+description: Connect Instantly to RevyOps to track campaign sends, replies, and bounces.
+---
+
+## Prerequisites
+
+- An active Instantly account
+- Your RevyOps `client_id` (find it under **Settings → Workspace**)
+
+## Webhook Setup
+
+<Steps>
+  <Step title="Open Instantly Settings">
+    In Instantly, go to **Settings → Integrations → Webhooks**.
+  </Step>
+  <Step title="Add a New Webhook">
+    Click **Add Webhook** and enter the following URL:
+
+    ```
+    https://api.revyops.com/public/instantly-webhook/{client_id}
+    ```
+
+    Replace `{client_id}` with your RevyOps workspace ID.
+  </Step>
+  <Step title="Select Events">
+    Enable the following event types:
+    - `Email Sent`
+    - `Email Reply`
+    - `Email Bounced`
+    - `Unsubscribed`
+  </Step>
+  <Step title="Save and Test">
+    Save the webhook and use the **Send Test** button to verify RevyOps receives the event.
+  </Step>
+</Steps>
+
+## Agency Setup (Global Webhook)
+
+For agencies managing multiple client workspaces, use the global webhook instead:
+
+```
+https://api.revyops.com/public/global-instantly-webhook/{agency_id}
+```
+
+This single webhook automatically routes events to the correct client workspace based on the campaign's workspace mapping in RevyOps.
+
+## Data Mapped
+
+| Instantly Field | RevyOps Field |
+|---|---|
+| `email` | Contact email |
+| `campaign_id` | Campaign ID |
+| `campaign_name` | Campaign name |
+| `first_name` | Contact first name |
+| `last_name` | Contact last name |
+| `company_name` | Company name |
+| `event_type` | Email type (OUTBOUND / INBOUND / BOUNCED) |

@@ -1,0 +1,163 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "RevyOps",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/logo/favicon.svg",
+  "colors": {
+    "primary": "#6366F1",
+    "light": "#818CF8",
+    "dark": "#4F46E5",
+    "anchors": {
+      "from": "#6366F1",
+      "to": "#818CF8"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:support@revyops.com"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Dashboard",
+    "url": "https://app.revyops.com"
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    },
+    {
+      "name": "MCP",
+      "url": "mcp"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "API Reference",
+      "icon": "square-terminal",
+      "url": "api-reference"
+    },
+    {
+      "name": "MCP",
+      "icon": "robot",
+      "url": "mcp"
+    },
+    {
+      "name": "Integrations",
+      "icon": "plug",
+      "url": "integrations"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": [
+        "introduction",
+        "quickstart"
+      ]
+    },
+    {
+      "group": "User Guide",
+      "pages": [
+        "user-guide/campaigns",
+        "user-guide/contacts",
+        "user-guide/companies",
+        "user-guide/analytics",
+        "user-guide/reporting-v1",
+        "user-guide/reporting-v2",
+        "user-guide/deliverability"
+      ]
+    },
+    {
+      "group": "Settings",
+      "pages": [
+        "settings/schema-settings"
+      ]
+    },
+    {
+      "group": "Integrations",
+      "pages": [
+        "integrations/overview",
+        "integrations/instantly",
+        "integrations/smartlead",
+        "integrations/lemlist",
+        "integrations/emailbison",
+        "integrations/plusvibe",
+        "integrations/hubspot",
+        "integrations/webhooks"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/introduction"
+      ]
+    },
+    {
+      "group": "Contacts",
+      "pages": [
+        "api-reference/contacts/list-contacts",
+        "api-reference/contacts/create-contact",
+        "api-reference/contacts/get-contact",
+        "api-reference/contacts/update-contact",
+        "api-reference/contacts/delete-contact",
+        "api-reference/contacts/lookup-by-custom-field",
+        "api-reference/contacts/add-custom-field",
+        "api-reference/contacts/update-custom-field",
+        "api-reference/contacts/delete-custom-field"
+      ]
+    },
+    {
+      "group": "Companies",
+      "pages": [
+        "api-reference/companies/list-companies",
+        "api-reference/companies/create-company",
+        "api-reference/companies/get-company",
+        "api-reference/companies/update-company",
+        "api-reference/companies/delete-company",
+        "api-reference/companies/lookup-by-custom-field",
+        "api-reference/companies/add-custom-field",
+        "api-reference/companies/update-custom-field",
+        "api-reference/companies/delete-custom-field"
+      ]
+    },
+    {
+      "group": "Emails",
+      "pages": [
+        "api-reference/emails/list-emails",
+        "api-reference/emails/create-email",
+        "api-reference/emails/get-email",
+        "api-reference/emails/delete-email",
+        "api-reference/emails/set-interested"
+      ]
+    },
+    {
+      "group": "Webhooks",
+      "pages": [
+        "api-reference/webhooks/instantly",
+        "api-reference/webhooks/smartlead",
+        "api-reference/webhooks/lemlist",
+        "api-reference/webhooks/emailbison",
+        "api-reference/webhooks/plusvibe",
+        "api-reference/webhooks/hubspot"
+      ]
+    },
+    {
+      "group": "MCP",
+      "pages": [
+        "mcp/overview",
+        "mcp/claude-desktop",
+        "mcp/claude-code",
+        "mcp/tools"
+      ]
+    }
+  ],
+  "openapi": "/api-reference/openapi.json",
+  "footerSocials": {
+    "website": "https://revyops.com"
+  }
+}

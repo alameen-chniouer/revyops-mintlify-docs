@@ -1,0 +1,76 @@
+---
+title: Quickstart
+description: Connect your first sending platform and start seeing data in RevyOps.
+---
+
+## Overview
+
+Setting up RevyOps takes about 5 minutes. You will:
+
+1. Obtain your API key
+2. Configure a webhook in your sending platform
+3. Verify data is flowing into your workspace
+
+---
+
+## Step 1 — Get Your API Key
+
+Every API request requires a `client_id` that identifies your workspace. You can find it in the RevyOps dashboard under **Settings → Workspace**.
+
+<Note>
+  Keep your `client_id` secure. It is used to authenticate webhook events and API calls.
+</Note>
+
+---
+
+## Step 2 — Connect a Sending Platform
+
+Choose the platform you want to connect and follow the guide:
+
+<CardGroup cols={2}>
+  <Card title="Instantly" icon="bolt" href="/integrations/instantly">
+    Set up Instantly webhooks
+  </Card>
+  <Card title="SmartLead" icon="envelope" href="/integrations/smartlead">
+    Set up SmartLead webhooks
+  </Card>
+  <Card title="Lemlist" icon="list" href="/integrations/lemlist">
+    Set up Lemlist webhooks
+  </Card>
+  <Card title="EmailBison" icon="bison" href="/integrations/emailbison">
+    Set up EmailBison webhooks
+  </Card>
+</CardGroup>
+
+---
+
+## Step 3 — Verify the Connection
+
+After configuring the webhook, send a test event from your platform. In the RevyOps dashboard:
+
+1. Go to **Campaigns**
+2. Look for the campaign you triggered the event from
+3. Confirm that sends, replies, or bounces are showing up
+
+<Tip>
+  Most platforms send a test payload when you save the webhook. Check the **Emails** section to confirm the record was received.
+</Tip>
+
+---
+
+## Step 4 — (Optional) Connect HubSpot
+
+If you use HubSpot as your CRM, follow the [HubSpot integration guide](/integrations/hubspot) to sync contacts and companies bidirectionally.
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Campaign Analytics" icon="chart-bar" href="/user-guide/campaigns">
+    Understand your campaign metrics
+  </Card>
+  <Card title="API Reference" icon="square-terminal" href="/api-reference/introduction">
+    Automate with the REST API
+  </Card>
+</CardGroup>

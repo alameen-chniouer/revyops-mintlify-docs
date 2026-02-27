@@ -1,0 +1,65 @@
+---
+title: Webhooks Reference
+description: Complete reference for all RevyOps webhook endpoints and the events they accept.
+---
+
+## Webhook Architecture
+
+RevyOps webhook endpoints receive `POST` requests from your sending platforms. Each event is processed synchronously and immediately reflected in the campaign, contact, and email records.
+
+All webhook endpoints respond with:
+- `200 OK` — event processed successfully
+- `400 Bad Request` — malformed payload
+- `404 Not Found` — unknown `client_id`
+
+## Endpoint Reference
+
+### Per-Client Webhooks
+
+These endpoints are scoped to a single workspace. Use them when each client has their own sending platform account.
+
+| Platform | Endpoint |
+|---|---|
+| Instantly | `POST /public/instantly-webhook/{client_id}` |
+| SmartLead | `POST /public/smartlead-webhook/{client_id}` |
+| Lemlist | `POST /public/lemlist-webhook/{client_id}` |
+| EmailBison | `POST /public/emailbison-webhook/{client_id}` |
+| PlusVibe | `POST /public/plusvibe-webhook/{client_id}` |
+| HubSpot | `POST /public/hubspot-webhook/{client_id}` |
+
+### Agency-Level (Global) Webhooks
+
+Use these when a single sending platform account is shared across multiple client workspaces. RevyOps routes events to the correct workspace automatically.
+
+| Platform | Endpoint |
+|---|---|
+| Instantly | `POST /public/global-instantly-webhook/{agency_id}` |
+| SmartLead | `POST /public/global-smartlead-webhook/{agency_id}` |
+| Lemlist | `POST /public/global-lemlist-webhook/{agency_id}` |
+| EmailBison | `POST /public/global-emailbison-webhook/{agency_id}` |
+
+## Event Types Processed
+
+| Event | What RevyOps Does |
+|---|---|
+| Email Sent | Creates or updates the email record, updates campaign send count |
+| Email Reply (Inbound) | Creates inbound email record, updates reply count |
+| Email Bounced | Marks email as bounced, updates bounce count |
+| Unsubscribed | Updates contact status to `unsubscribed` |
+
+## Idempotency
+
+Webhooks are idempotent — sending the same event multiple times will not create duplicate records. RevyOps deduplicates based on the email address + campaign + timestamp combination.
+
+## Debugging Webhook Events
+
+If events are not appearing in RevyOps:
+
+1. Confirm the webhook URL includes your correct `client_id`
+2. Check your sending platform's webhook delivery logs for any error responses
+3. Verify the platform is sending the correct event types
+4. Use the **Emails** section in RevyOps to see if any records arrived with unexpected data
+
+<Tip>
+  Most sending platforms show webhook delivery history with request/response details. Check these logs first when debugging connectivity issues.
+</Tip>

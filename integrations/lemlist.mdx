@@ -1,0 +1,55 @@
+---
+title: Lemlist
+description: Connect Lemlist to RevyOps to sync campaign activity and replies.
+---
+
+## Prerequisites
+
+- An active Lemlist account
+- Your RevyOps `client_id` (find it under **Settings → Workspace**)
+
+## Webhook Setup
+
+<Steps>
+  <Step title="Open Lemlist Settings">
+    In Lemlist, go to **Settings → Integrations → Webhooks**.
+  </Step>
+  <Step title="Add a New Webhook">
+    Set the destination URL to:
+
+    ```
+    https://api.revyops.com/public/lemlist-webhook/{client_id}
+    ```
+
+    Replace `{client_id}` with your RevyOps workspace ID.
+  </Step>
+  <Step title="Select Events">
+    Enable:
+    - `emailSent`
+    - `emailOpened`
+    - `emailReplied`
+    - `emailBounced`
+    - `unsubscribed`
+  </Step>
+  <Step title="Save">
+    Save the webhook. Lemlist will send a confirmation ping to verify the endpoint is reachable.
+  </Step>
+</Steps>
+
+## Agency Setup (Global Webhook)
+
+```
+https://api.revyops.com/public/global-lemlist-webhook/{agency_id}
+```
+
+## Data Mapped
+
+| Lemlist Field | RevyOps Field |
+|---|---|
+| `email` | Contact email |
+| `campaignId` | Campaign ID |
+| `campaignName` | Campaign name |
+| `firstName` | Contact first name |
+| `lastName` | Contact last name |
+| `companyName` | Company name |
+| `type` | Email event type |

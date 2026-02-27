@@ -1,0 +1,272 @@
+---
+title: Tools Reference
+description: Complete reference for all RevyOps MCP tools.
+---
+
+## Authentication
+
+All tools authenticate using the `X-API-KEY` passed in the MCP server header. No additional auth is needed per-tool call.
+
+---
+
+## Workspace Tools
+
+### `list_clients`
+
+List all available RevyOps client workspaces accessible via your API key(s). Call this first to discover which workspaces you can query, then pass the workspace name to other tools.
+
+**Parameters:** none
+
+**Returns:** List of workspace names and IDs, with a flag indicating the default workspace.
+
+---
+
+## Campaign Tools
+
+### `get_campaigns`
+
+Get all campaigns with performance metrics.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `client_name` | string | Workspace name (from `list_clients`). Uses default if omitted. |
+| `date_from` | string | Filter start date (`YYYY-MM-DD`) |
+| `date_to` | string | Filter end date (`YYYY-MM-DD`) |
+| `origin` | string | Platform filter: `instantly`, `smartlead`, `emailbison`, `lemlist` |
+| `date_grouping` | string | Group timeseries: `daily`, `weekly`, `monthly` |
+
+**Returns:** Per-campaign metrics — sent, replies, bounces, interested, reply rate, open rate, click rate, unsubscribes, start/end dates.
+
+---
+
+### `get_campaign_drilldown`
+
+Drill into a specific campaign to see individual contacts or companies.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `campaign_id` | string | **Required.** Campaign identifier |
+| `origin` | string | **Required.** Platform: `instantly`, `smartlead`, `emailbison`, `lemlist` |
+| `metric_type` | string | What to show: `sends`, `prospects`, `replies`, `interested`, `bounces` (default: `sends`) |
+| `client_name` | string | Workspace name |
+| `date_start` | string | Filter start date |
+| `date_end` | string | Filter end date |
+| `search` | string | Search by email, name, or company |
+| `group_by` | string | `contacts` or `companies` (default: `contacts`) |
+| `limit` | integer | Max results (default: 100, max: 5000) |
+
+---
+
+### `get_campaign_stats`
+
+Get high-level campaign statistics across all campaigns.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `client_name` | string | Workspace name |
+| `date_start` | string | Filter start date |
+| `date_end` | string | Filter end date |
+
+---
+
+### `add_campaign_note`
+
+Add or update a note on a campaign.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `campaign_id` | string | **Required.** Campaign identifier |
+| `origin` | string | **Required.** Platform |
+| `note` | string | **Required.** Note text |
+| `client_name` | string | Workspace name |
+
+---
+
+### `archive_campaign`
+
+Archive or unarchive a campaign.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `campaign_id` | string | **Required.** Campaign identifier |
+| `origin` | string | **Required.** Platform |
+| `archived` | boolean | `true` to archive, `false` to unarchive (default: `true`) |
+| `client_name` | string | Workspace name |
+
+---
+
+## Contact Tools
+
+### `search_contacts`
+
+Search contacts by email, name, domain, or LinkedIn URL.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `client_name` | string | Workspace name |
+| `email` | string | Filter by email address |
+| `first_name` | string | Filter by first name |
+| `last_name` | string | Filter by last name |
+| `domain` | string | Filter by company domain |
+| `linkedin_url` | string | Filter by LinkedIn URL |
+
+---
+
+### `get_contact`
+
+Get full contact details including custom fields.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `contact_id` | string | **Required.** Contact ID |
+| `client_name` | string | Workspace name |
+
+---
+
+### `update_contact`
+
+Update a contact's fields.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `contact_id` | string | **Required.** Contact ID |
+| `first_name` | string | New first name |
+| `last_name` | string | New last name |
+| `title` | string | New job title |
+| `phone` | string | New phone number |
+| `status` | string | New contact status |
+| `custom_fields` | object | Key-value pairs of custom field updates |
+| `client_name` | string | Workspace name |
+
+---
+
+## Company Tools
+
+### `search_companies`
+
+Search companies by domain or name.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `client_name` | string | Workspace name |
+| `domain` | string | Filter by company domain |
+| `name` | string | Filter by company name |
+
+---
+
+### `get_company`
+
+Get full company details including custom fields.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `company_id` | string | **Required.** Company ID |
+| `client_name` | string | Workspace name |
+
+---
+
+### `update_company`
+
+Update a company's fields.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `company_id` | string | **Required.** Company ID |
+| `name` | string | New company name |
+| `status` | string | New status |
+| `custom_fields` | object | Key-value pairs of custom field updates |
+| `client_name` | string | Workspace name |
+
+---
+
+## Email Tools
+
+### `search_emails`
+
+Search email records by campaign, contact, or type.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `client_name` | string | Workspace name |
+| `campaign_id` | string | Filter by campaign |
+| `contact_email` | string | Filter by contact email address |
+| `email_type` | string | `INBOUND`, `OUTBOUND`, or `BOUNCED` |
+| `limit` | integer | Max results (default: 50) |
+
+---
+
+### `mark_email_interested`
+
+Mark or unmark an email reply as interested.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `email_id` | string | **Required.** Email record ID |
+| `interested` | boolean | `true` to mark, `false` to unmark (default: `true`) |
+| `client_name` | string | Workspace name |
+
+---
+
+### `get_email_thread`
+
+Get the full email thread between your team and a contact.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `contact_id` | string | **Required.** Contact ID |
+| `client_name` | string | Workspace name |
+| `campaign_id` | string | Filter to a specific campaign |
+| `origin` | string | Filter to a specific platform |
+
+---
+
+## Analytics Tools
+
+### `get_deliverability`
+
+Get deliverability metrics broken down by sending domain and inbox.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `client_name` | string | Workspace name |
+| `date_start` | string | Filter start date |
+| `date_end` | string | Filter end date |
+
+---
+
+### `get_contacts_stats`
+
+Get contact-level aggregate statistics.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `client_name` | string | Workspace name |
+| `date_start` | string | Filter start (ISO datetime) |
+| `date_end` | string | Filter end (ISO datetime) |
+
+---
+
+### `get_variable_report_variables`
+
+Get available tracking variables and campaigns for A/B reporting.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `client_name` | string | Workspace name |
+| `start_date` | string | Filter start |
+| `end_date` | string | Filter end |
+
+---
+
+### `get_variable_report`
+
+Generate an A/B test style report grouped by tracking variables.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `campaign_origin_pairs` | array | List of `[campaign_id, origin]` pairs |
+| `variable_fields` | array | Tracking field names to group by |
+| `variable_values` | array | Allowed values for each field |
+| `client_name` | string | Workspace name |
+| `start_date` | string | Filter start |
+| `end_date` | string | Filter end |

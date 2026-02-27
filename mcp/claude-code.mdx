@@ -1,0 +1,97 @@
+---
+title: Claude Code
+description: Connect the RevyOps MCP server to Claude Code CLI.
+---
+
+## Prerequisites
+
+- [Claude Code](https://claude.ai/claude-code) installed (`npm install -g @anthropic-ai/claude-code`)
+- A RevyOps API key — get one from **Settings → API Keys**
+
+---
+
+## Setup
+
+Add the RevyOps MCP server to your Claude Code config using the CLI:
+
+```bash
+claude mcp add revyops \
+  --transport http \
+  --url https://mcp.revyops.com/mcp \
+  --header "X-API-KEY: RO-your-api-key-here"
+```
+
+Or add it manually to your `~/.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "revyops": {
+      "type": "http",
+      "url": "https://mcp.revyops.com/mcp",
+      "headers": {
+        "X-API-KEY": "RO-your-api-key-here"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Verify
+
+Run Claude Code and check that the server is connected:
+
+```bash
+claude
+```
+
+Then in the session:
+
+```
+> List my RevyOps clients
+```
+
+Claude should respond with your available workspace(s).
+
+---
+
+## Multiple Workspaces
+
+Pass a comma-separated list of API keys to access multiple workspaces in one session:
+
+```bash
+claude mcp add revyops \
+  --transport http \
+  --url https://mcp.revyops.com/mcp \
+  --header "X-API-KEY: RO-key-a,RO-key-b"
+```
+
+Use `list_clients` to see all resolved workspaces, then specify by name in your prompts:
+
+```
+> Show me campaigns for Client B from last week
+```
+
+---
+
+## Project-Scoped Config
+
+To scope the MCP server to a specific project (instead of globally), add a `.claude/settings.json` file in your project root:
+
+```json
+{
+  "mcpServers": {
+    "revyops": {
+      "type": "http",
+      "url": "https://mcp.revyops.com/mcp",
+      "headers": {
+        "X-API-KEY": "RO-your-api-key-here"
+      }
+    }
+  }
+}
+```
+
+This keeps the connection isolated to that project's Claude Code sessions.

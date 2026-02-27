@@ -1,0 +1,76 @@
+---
+title: Deliverability
+description: Monitor sending domain and inbox health across all your campaigns.
+---
+
+## Overview
+
+The Deliverability view breaks down email performance by **sending domain** and **individual inbox**, giving you visibility into which domains and inboxes are performing well and which may be experiencing delivery issues.
+
+---
+
+## How It Works
+
+RevyOps analyses every outbound email across your campaigns and groups the results by:
+
+1. **Domain** — the domain part of the sending email address (e.g. `yourdomain.com`)
+2. **Inbox** — the full sending email address (e.g. `john@yourdomain.com`)
+
+This lets you quickly spot if a specific domain or inbox is responsible for a spike in bounces or a drop in reply rates.
+
+---
+
+## Metrics
+
+### Domain Level
+
+| Metric | Description |
+|---|---|
+| **Domain** | The sending domain |
+| **Inboxes** | Number of unique inboxes sending from this domain |
+| **Total Sends** | All outbound emails sent from this domain |
+| **Total Replies** | Inbound replies received to emails from this domain |
+
+### Inbox Level (expanded)
+
+Expand any domain to see per-inbox statistics:
+
+| Metric | Description |
+|---|---|
+| **Inbox** | The full sending email address |
+| **Total Sends** | Outbound emails sent from this inbox |
+| **Total Replies** | Replies received to this inbox |
+
+---
+
+## Filtering
+
+Use the date range filter to scope deliverability data to a specific period:
+
+- **Start Date** — only include sends from this date onwards
+- **End Date** — only include sends up to this date
+
+This is useful when investigating whether a deliverability issue is recent or has been ongoing.
+
+---
+
+## Reading the Data
+
+**High sends, low replies on a specific domain** — may indicate deliverability problems (emails landing in spam, domain reputation issues, or inbox warmup needed).
+
+**One inbox with significantly lower reply rates** — that specific inbox may have reputation issues separate from the rest of the domain.
+
+**Uneven send distribution** — if most sends come from a single inbox, consider spreading volume across more inboxes for better inbox rotation.
+
+<Tip>
+  Cross-reference deliverability data with your sending platform's bounce reports. A high bounce rate in RevyOps combined with platform-side alerts is a strong signal to pause that inbox and investigate.
+</Tip>
+
+---
+
+## Accessing Deliverability
+
+Deliverability metrics are available in two places:
+
+1. **Reporting v1** — the **Deliverability** tab in the Reporting page
+2. **MCP** — use the `get_deliverability` tool to query data via Claude

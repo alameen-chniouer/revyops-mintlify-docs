@@ -1,0 +1,53 @@
+---
+title: Companies
+description: Track account-level data and group contacts by organization.
+---
+
+## Overview
+
+Companies represent the organizations your contacts belong to. RevyOps automatically associates contacts with companies based on their email domain or explicit company data from webhook payloads.
+
+## Company Fields
+
+| Field | Description |
+|---|---|
+| **Domain** | Primary identifier — the company's website domain |
+| **Name** | Company name |
+| **Status** | Current account status |
+| **Custom Fields** | Flexible key-value fields defined per workspace |
+
+## Custom Fields
+
+Just like contacts, companies support custom fields for tracking account-level data:
+
+- Revenue range or ARR
+- Industry or vertical
+- Account owner or SDR assigned
+- ICP score
+- HubSpot deal stage
+
+## Company Status
+
+Track the current state of each account:
+
+| Status | Meaning |
+|---|---|
+| `active` | Contacts at this company are actively being outreached |
+| `replied` | At least one contact has replied |
+| `interested` | At least one contact is marked interested |
+| `not-interested` | Explicitly marked as not a fit |
+| `customer` | Existing customer — suppress from outreach |
+
+## Account-Based View
+
+The **Companies** drilldown shows:
+
+- All contacts at the company
+- Which campaigns they've appeared in
+- Aggregate reply and interested counts across all contacts
+
+This gives you an account-level view of engagement — useful for knowing whether a company has already been worked before starting a new campaign.
+
+## Master Company List
+
+The **Master List** view lets you browse, search, and filter all companies in your workspace. Export to CSV for reporting or import into your CRM.

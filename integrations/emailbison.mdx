@@ -1,0 +1,37 @@
+---
+title: EmailBison
+description: Connect EmailBison to RevyOps via webhooks.
+---
+
+## Prerequisites
+
+- An active EmailBison account
+- Your RevyOps `client_id` (find it under **Settings → Workspace**)
+
+## Webhook Setup
+
+<Steps>
+  <Step title="Open EmailBison Settings">
+    In EmailBison, navigate to **Settings → Webhooks**.
+  </Step>
+  <Step title="Add Webhook URL">
+    Enter:
+
+    ```
+    https://api.revyops.com/public/emailbison-webhook/{client_id}
+    ```
+  </Step>
+  <Step title="Select Events">
+    Enable all email event types: sent, reply, bounce, unsubscribe.
+  </Step>
+  <Step title="Save and Verify">
+    Save and trigger a test event to confirm data arrives in RevyOps.
+  </Step>
+</Steps>
+
+## Agency Setup (Global Webhook)
+
+```
+https://api.revyops.com/public/global-emailbison-webhook/{agency_id}
+```
+

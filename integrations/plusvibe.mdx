@@ -1,0 +1,31 @@
+---
+title: PlusVibe
+description: Connect PlusVibe to RevyOps to track campaign data.
+---
+
+## Prerequisites
+
+- An active PlusVibe account
+- Your RevyOps `client_id` (find it under **Settings → Workspace**)
+
+## Webhook Setup
+
+<Steps>
+  <Step title="Open PlusVibe Settings">
+    In PlusVibe, go to **Settings → Integrations → Webhooks**.
+  </Step>
+  <Step title="Add Webhook URL">
+    Enter:
+
+    ```
+    https://api.revyops.com/public/plusvibe-webhook/{client_id}
+    ```
+  </Step>
+  <Step title="Enable Events">
+    Select email sent, reply, bounce, and unsubscribe events.
+  </Step>
+  <Step title="Save">
+    Save and verify with a test payload.
+  </Step>
+</Steps>
+

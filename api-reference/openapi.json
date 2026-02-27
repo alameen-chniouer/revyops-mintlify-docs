@@ -1,0 +1,4189 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "RevyOps API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/public/companies": {
+      "get": {
+        "operationId": "Search for company",
+        "description": "Allows you to search for companies in the system. You can filter the search using query parameters, and the search will return companies that match the specified criteria.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "domain",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter companies by domain"
+          },
+          {
+            "in": "query",
+            "name": "industry",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter companies by industry"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter companies by name"
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Company"
+                  }
+                }
+              }
+            },
+            "description": "The list of companies was successfully retrieved."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "post": {
+        "operationId": "Add company",
+        "description": "Creates a new company in the system with the provided details.",
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Company"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Company"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Company"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Company"
+                }
+              }
+            },
+            "description": "Created. The company was successfully created."
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "409": {
+            "description": "Conflict. A company with this domain already exists for this client."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/companies-master-list": {
+      "get": {
+        "operationId": "Search for company (Master List) ",
+        "description": "Allows you to search for companies in the system - across all clients. You can filter the search using query parameters, and the search will return companies that match the specified criteria. The response limit is 100 companies",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "domain",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter companies by domain"
+          },
+          {
+            "in": "query",
+            "name": "industry",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter companies by industry"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter companies by name"
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MasterCompany"
+                  }
+                }
+              }
+            },
+            "description": "The list of companies was successfully retrieved."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/companies-master-list/{company_id}": {
+      "get": {
+        "operationId": "Get company (Master List)",
+        "description": "Retrieves details of a specific company by its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MasterCompany"
+                }
+              }
+            },
+            "description": "OK. The company was successfully retrieved."
+          },
+          "401": {
+            "description": "Unauthorized. API KEY not authorized to access this client_id."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Company with this ID does not exist."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/companies/{company_id}": {
+      "get": {
+        "operationId": "Get company",
+        "description": "Retrieves details of a specific company by its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Company"
+                }
+              }
+            },
+            "description": "OK. The company was successfully retrieved."
+          },
+          "401": {
+            "description": "Unauthorized. API KEY not authorized to access this client_id."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Company with this ID does not exist."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "patch": {
+        "operationId": "Modify company",
+        "description": "Updates the details of an existing company using its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedCompanyPatchRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedCompanyPatchRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedCompanyPatchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyPatchRequest"
+                }
+              }
+            },
+            "description": "OK. The company was successfully updated."
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "401": {
+            "description": "Unauthorized. Company does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Company with this ID does not exist."
+          },
+          "409": {
+            "description": "Conflict. A company with this domain already exists for this client."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "delete": {
+        "operationId": "Remove company",
+        "description": "Deletes a specific company from the system using its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. The company was successfully deleted."
+          },
+          "401": {
+            "description": "Unauthorized. The company does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. No company with the specified ID exists."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/companies/{company_id}/custom-fields": {
+      "post": {
+        "operationId": "Add company custom field",
+        "description": "Adds a custom field to a specific company.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyCustomFields"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyCustomFields"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyCustomFields"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyCustomFields"
+                }
+              }
+            },
+            "description": "Created. The custom field was successfully created."
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "401": {
+            "description": "Unauthorized. Company does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Company with this ID does not exist."
+          },
+          "409": {
+            "description": "Conflict. A custom field with this name already exists for this company."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/companies/{company_id}/custom-fields/{field_id}": {
+      "patch": {
+        "operationId": "Modify company custom field",
+        "description": "Updates the value of an existing custom field for a specific company.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "field_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedCompanyCustomFields"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedCompanyCustomFields"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedCompanyCustomFields"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyCustomFields"
+                }
+              }
+            },
+            "description": "OK. The custom field was successfully updated."
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "401": {
+            "description": "Unauthorized. Company does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Company with this ID does not exist."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "delete": {
+        "operationId": "Delete company custom field",
+        "description": "Removes a custom field from a specific company.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "field_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. The custom field was successfully deleted."
+          },
+          "401": {
+            "description": "Unauthorized. Company does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Company with this ID does not exist or the field does not belong to this company."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/contacts": {
+      "get": {
+        "operationId": "Search for contact",
+        "description": "Allows you to search for contacts within the system. You can filter the search using query parameters, and the search will return contacts that match the provided criteria. The response limit is 100 contacts",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "domain",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter for contacts with companies matching to a domain (excludes contacts without companies)"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by email"
+          },
+          {
+            "in": "query",
+            "name": "firstname",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by first name"
+          },
+          {
+            "in": "query",
+            "name": "lastname",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by last name"
+          },
+          {
+            "in": "query",
+            "name": "linkedin_url",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by LinkedIn URL"
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contact"
+                  }
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "No contact with the specified ID exists."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "post": {
+        "operationId": "Add contact",
+        "description": "Creates a new contact. company_id accepts an integer ID or a domain string to auto-resolve the company. Returns the created contact on success.",
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contact"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Contact"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Contact"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactPostResponse"
+                }
+              }
+            },
+            "description": ""
+          },
+          "400": {
+            "description": "Bad Request. Invalid or missing fields."
+          },
+          "401": {
+            "description": "Unauthorized. Company does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Company with this ID does not exist."
+          },
+          "409": {
+            "description": "Conflict. Contact with this email or LinkedIn URL already exists for this client."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/contacts-master-list": {
+      "get": {
+        "operationId": "Search for contact (Master List)",
+        "description": "Allows you to search for contacts within the system - across all clients. You can filter the search using query parameters, and the search will return contacts that match the provided criteria. The response limit is 100 contacts",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "domain",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter for contacts with companies matching to a domain (excludes contacts without companies)"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by email"
+          },
+          {
+            "in": "query",
+            "name": "firstname",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by first name"
+          },
+          {
+            "in": "query",
+            "name": "lastname",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by last name"
+          },
+          {
+            "in": "query",
+            "name": "linkedin_url",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by LinkedIn URL"
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MasterContact"
+                  }
+                }
+              }
+            },
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "No contact with the specified ID exists."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/contacts-master-list/{contact_id}": {
+      "get": {
+        "operationId": "Get contact (Master List)",
+        "description": "Retrieves details of a specific contact by its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MasterContact"
+                }
+              }
+            },
+            "description": "OK. The contact was successfully retrieved."
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "No contact with the specified ID exists."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/contacts-master-list/lookup-by-custom-field": {
+      "get": {
+        "operationId": "Search contacts by custom field (Master List)",
+        "description": "Searches for contacts that contain a specific value in a specific custom field. Returns up to 100 matching contacts.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "field_name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the custom field to search for",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "field_value",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Value of the custom field to search for",
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MasterContact"
+                  }
+                }
+              }
+            },
+            "description": ""
+          },
+          "400": {
+            "description": "Bad Request. Missing required parameters."
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/contacts/{contact_id}": {
+      "get": {
+        "operationId": "Get contact",
+        "description": "Retrieves details of a specific contact by its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            },
+            "description": "OK. The contact was successfully retrieved."
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "No contact with the specified ID exists."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "patch": {
+        "operationId": "Modify contact",
+        "description": "Updates the details of an existing contact. company_id accepts an integer ID or a domain string to auto-resolve the company.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedContactPatchRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedContactPatchRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedContactPatchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactPatchResponse"
+                }
+              }
+            },
+            "description": ""
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "401": {
+            "description": "Unauthorized. Company does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Contact with this ID does not exist."
+          },
+          "409": {
+            "description": "Conflict. A contact with this email or LinkedIn URL already exists for this client."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "delete": {
+        "operationId": "Remove contact",
+        "description": "Deletes a specific contact from the system using its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. The contact was successfully deleted."
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "No contact with the specified ID exists."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/contacts/{contact_id}/custom-fields": {
+      "post": {
+        "operationId": "Add contact custom field",
+        "description": "Adds a custom field to a specific contact.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactCustomFields"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactCustomFields"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactCustomFields"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactCustomFields"
+                }
+              }
+            },
+            "description": "OK. The custom field was successfully created."
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "401": {
+            "description": "Unauthorized. Contact does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Contact with this ID does not exist."
+          },
+          "409": {
+            "description": "Conflict. A contact with this email already exists for this client"
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/contacts/{contact_id}/custom-fields/{field_id}": {
+      "patch": {
+        "operationId": "Modify contact custom field",
+        "description": "Updates the value of an existing custom field for a specific contact.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "field_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedContactCustomFields"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedContactCustomFields"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedContactCustomFields"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactCustomFields"
+                }
+              }
+            },
+            "description": "OK. The custom field was successfully updated."
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "401": {
+            "description": "Unauthorized. Contact does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Contact with this ID does not exist."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "delete": {
+        "operationId": "Delete contact custom field",
+        "description": "Deletes a custom field for a contact using the contact ID and field ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "field_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. The custom field was successfully deleted."
+          },
+          "401": {
+            "description": "Unauthorized. Contact does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Custom field with this ID does not exist."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/contacts/lookup-by-custom-field": {
+      "get": {
+        "operationId": "Search contacts by custom field",
+        "description": "Searches for contacts that contain a specific value in a specific custom field. Returns up to 100 matching contacts.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "field_name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the custom field to search for",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "field_value",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Value of the custom field to search for",
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contact"
+                  }
+                }
+              }
+            },
+            "description": ""
+          },
+          "400": {
+            "description": "Bad Request. Missing required parameters."
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/emailbison-webhook/{client_id}": {
+      "post": {
+        "operationId": "public_emailbison_webhook_create",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "client_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
+    "/public/emails": {
+      "get": {
+        "operationId": "Search for emails",
+        "description": "Allows you to search for emails in the system. You can filter the search using query parameters, and the search will return emails that match the specified criteria.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "campaign_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter emails by campaign ID"
+          },
+          {
+            "in": "query",
+            "name": "contact_email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter emails by contact email"
+          },
+          {
+            "in": "query",
+            "name": "origin",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter emails by origin"
+          },
+          {
+            "in": "query",
+            "name": "subject",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter emails by subject"
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmailModel"
+                  }
+                }
+              }
+            },
+            "description": "The list of emails was successfully retrieved."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "post": {
+        "operationId": "Add email",
+        "description": "Creates a new email in the system with the provided details.",
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailModel"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailModel"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailModel"
+                }
+              }
+            },
+            "description": "Created. The email was successfully created."
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "401": {
+            "description": "Unauthorized. Contact does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Contact with this ID does not exist."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/emails/{email_id}": {
+      "get": {
+        "operationId": "Get email",
+        "description": "Retrieves details of a specific email by its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailModel"
+                }
+              }
+            },
+            "description": "OK. The email was successfully retrieved."
+          },
+          "401": {
+            "description": "Unauthorized. API KEY not authorized to access this client_id."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Email with this ID does not exist."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "delete": {
+        "operationId": "Remove email",
+        "description": "Deletes a specific email from the system using its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. The email was successfully deleted."
+          },
+          "401": {
+            "description": "Unauthorized. The email does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. No email with the specified ID exists."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/emails/{email_id}/custom-fields": {
+      "post": {
+        "operationId": "Add email custom field",
+        "description": "Adds a custom field to a specific email.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailCustomFields"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailCustomFields"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailCustomFields"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailCustomFields"
+                }
+              }
+            },
+            "description": "Created. The custom field was successfully created."
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "401": {
+            "description": "Unauthorized. Email does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Email with this ID does not exist."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/emails/{email_id}/custom-fields/{field_id}": {
+      "delete": {
+        "operationId": "Delete email custom field",
+        "description": "Removes a custom field from a specific email.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "field_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. The custom field was successfully deleted."
+          },
+          "401": {
+            "description": "Unauthorized. Email does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Email with this ID does not exist or the field does not belong to this email."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/emails/set-interested": {
+      "post": {
+        "operationId": "Set email to \"interested\"",
+        "description": "Set an \"interested\" field of the email to TRUE",
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailSetInterested"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailSetInterested"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailSetInterested"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK. The \"interested\" field is now TRUE."
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/global-emailbison-webhook/{agency_id}": {
+      "post": {
+        "operationId": "public_global_emailbison_webhook_create",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "agency_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
+    "/public/global-instantly-webhook/{agency_id}": {
+      "post": {
+        "operationId": "public_global_instantly_webhook_create",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "agency_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
+    "/public/global-lemlist-webhook/{agency_id}": {
+      "post": {
+        "operationId": "public_global_lemlist_webhook_create",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "agency_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
+    "/public/global-smartlead-webhook/{agency_id}": {
+      "post": {
+        "operationId": "public_global_smartlead_webhook_create",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "agency_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
+    "/public/hubspot-webhook/{client_id}": {
+      "post": {
+        "operationId": "public_hubspot_webhook_create",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "client_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
+    "/public/instantly-webhook/{client_id}": {
+      "post": {
+        "operationId": "public_instantly_webhook_create",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "client_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
+    "/public/instantly/{id}": {
+      "post": {
+        "operationId": "public_instantly_create",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
+    "/public/lemlist-webhook/{client_id}": {
+      "post": {
+        "operationId": "public_lemlist_webhook_create",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "client_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
+    "/public/plusvibe-webhook/{client_id}": {
+      "post": {
+        "operationId": "public_plusvibe_webhook_create",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "client_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
+    "/public/smartlead-webhook/{client_id}": {
+      "post": {
+        "operationId": "public_smartlead_webhook_create",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "client_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
+    "/public/v2/companies": {
+      "get": {
+        "operationId": "Search for company (v2)",
+        "description": "Allows you to search for companies in the system. You can filter the search using query parameters, and the search will return companies that match the specified criteria.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "domain",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter companies by domain"
+          },
+          {
+            "in": "query",
+            "name": "industry",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter companies by industry"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter companies by name"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of companies per page (max 100)"
+          },
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedCompanyResponse"
+                }
+              }
+            },
+            "description": "Paginated list of companies"
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "post": {
+        "operationId": "Add company (v2)",
+        "description": "Creates a new company in the system with the provided details.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Company"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Company"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Company"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Company"
+                }
+              }
+            },
+            "description": "Created. The company was successfully created."
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "409": {
+            "description": "Conflict. A company with this domain already exists for this client."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/v2/companies-master-list": {
+      "get": {
+        "operationId": "Search for company (Master List) (v2)",
+        "description": "Allows you to search for companies in the system - across all clients. You can filter the search using query parameters, and the search will return companies that match the specified criteria. The response limit is 100 companies",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "domain",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter companies by domain"
+          },
+          {
+            "in": "query",
+            "name": "industry",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter companies by industry"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter companies by name"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of companies per page (max 100)"
+          },
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedMasterCompanyResponse"
+                }
+              }
+            },
+            "description": "Paginated list of companies"
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/v2/companies-master-list/{company_id}": {
+      "get": {
+        "operationId": "Get company (Master List) (v2)",
+        "description": "Retrieves details of a specific company by its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MasterCompany"
+                }
+              }
+            },
+            "description": "OK. The company was successfully retrieved."
+          },
+          "401": {
+            "description": "Unauthorized. API KEY not authorized to access this client_id."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Company with this ID does not exist."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/v2/companies-master-list/lookup-by-custom-field": {
+      "get": {
+        "operationId": "Search companies by custom field (Master List) (v2)",
+        "description": "Searches for companies that contain a specific value in a specific custom field. Returns up to 100 matching companies.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "field_name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the custom field to search for",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "field_value",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Value of the custom field to search for",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of companies per page (max 100)"
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedMasterCompanyResponse"
+                }
+              }
+            },
+            "description": "Paginated list of companies"
+          },
+          "400": {
+            "description": "Bad Request. Missing required parameters."
+          },
+          "401": {
+            "description": "Unauthorized. The company does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/v2/companies/{company_id}": {
+      "get": {
+        "operationId": "Get company (v2)",
+        "description": "Retrieves details of a specific company by its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Company"
+                }
+              }
+            },
+            "description": "OK. The company was successfully retrieved."
+          },
+          "401": {
+            "description": "Unauthorized. API KEY not authorized to access this client_id."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Company with this ID does not exist."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "patch": {
+        "operationId": "Modify company_2",
+        "description": "Updates the details of an existing company using its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedCompanyPatchRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedCompanyPatchRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedCompanyPatchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyPatchRequest"
+                }
+              }
+            },
+            "description": "OK. The company was successfully updated."
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "401": {
+            "description": "Unauthorized. Company does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Company with this ID does not exist."
+          },
+          "409": {
+            "description": "Conflict. A company with this domain already exists for this client."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/v2/companies/lookup-by-custom-field": {
+      "get": {
+        "operationId": "Search companies by custom field (v2)",
+        "description": "Searches for companies that contain a specific value in a specific custom field. Returns up to 100 matching companies.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "field_name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the custom field to search for",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "field_value",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Value of the custom field to search for",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of companies per page (max 100)"
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedCompanyResponse"
+                }
+              }
+            },
+            "description": "Paginated list of companies"
+          },
+          "400": {
+            "description": "Bad Request. Missing required parameters."
+          },
+          "401": {
+            "description": "Unauthorized. The company does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/v2/contacts": {
+      "get": {
+        "operationId": "Search for contact (v2)",
+        "description": "Allows you to search for contacts within the system. You can filter the search using query parameters, and the search will return contacts that match the provided criteria. The response limit is 100 contacts",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "domain",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter for contacts with companies matching to a domain (excludes contacts without companies)"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by email"
+          },
+          {
+            "in": "query",
+            "name": "firstname",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by first name"
+          },
+          {
+            "in": "query",
+            "name": "lastname",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by last name"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of contacts per page (max 100)"
+          },
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedContactsResponse"
+                }
+              }
+            },
+            "description": "Paginated list of contacts"
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "No contact with the specified ID exists."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "post": {
+        "operationId": "Add contact (v2)",
+        "description": "Creates a new contact. company_id accepts an integer ID or a domain string to auto-resolve the company. Returns the created contact on success.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactV2"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactV2"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactV2"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactPostResponseV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "400": {
+            "description": "Bad Request. Invalid or missing fields."
+          },
+          "401": {
+            "description": "Unauthorized. Company does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Company with this ID does not exist."
+          },
+          "409": {
+            "description": "Conflict. Contact with this email or LinkedIn URL already exists for this client."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/v2/contacts-master-list": {
+      "get": {
+        "operationId": "Search for contact (Master List) (v2)",
+        "description": "Allows you to search for contacts within the system - across all clients. You can filter the search using query parameters, and the search will return contacts that match the provided criteria. The response limit is 100 contacts",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "domain",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter for contacts with companies matching to a domain (excludes contacts without companies)"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by email"
+          },
+          {
+            "in": "query",
+            "name": "firstname",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by first name"
+          },
+          {
+            "in": "query",
+            "name": "lastname",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by last name"
+          },
+          {
+            "in": "query",
+            "name": "linkedin_url",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by LinkedIn URL"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of contacts per page (max 100)"
+          },
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedMasterContactsResponse"
+                }
+              }
+            },
+            "description": "Paginated list of contacts"
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "No contact with the specified ID exists."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/v2/contacts-master-list/{contact_id}": {
+      "get": {
+        "operationId": "Get contact (Master List) (v2)",
+        "description": "Retrieves details of a specific contact by its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MasterContact"
+                }
+              }
+            },
+            "description": "OK. The contact was successfully retrieved."
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "No contact with the specified ID exists."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/v2/contacts-master-list/lookup-by-custom-field": {
+      "get": {
+        "operationId": "Search contacts by custom field (Master List) (v2)",
+        "description": "Searches for contacts that contain a specific value in a specific custom field. Returns up to 100 matching contacts.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "field_name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the custom field to search for",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "field_value",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Value of the custom field to search for",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of contacts per page (max 100)"
+          },
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedMasterContactsResponse"
+                }
+              }
+            },
+            "description": "Paginated list of contacts"
+          },
+          "400": {
+            "description": "Bad Request. Missing required parameters."
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/v2/contacts/{contact_id}": {
+      "get": {
+        "operationId": "Get contact (v2)",
+        "description": "Retrieves details of a specific contact by its unique identifier.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactV2"
+                }
+              }
+            },
+            "description": "OK. The contact was successfully retrieved."
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "No contact with the specified ID exists."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      },
+      "patch": {
+        "operationId": "Modify contact (v2)",
+        "description": "Updates the details of an existing contact. company_id accepts an integer ID or a domain string to auto-resolve the company.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedContactPatchRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedContactPatchRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedContactPatchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactPatchResponseV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "400": {
+            "description": "Bad Request. Invalid data has been provided."
+          },
+          "401": {
+            "description": "Unauthorized. Company does not belong to this client."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "404": {
+            "description": "Not Found. Contact with this ID does not exist."
+          },
+          "409": {
+            "description": "Conflict. A contact with this email or LinkedIn URL already exists for this client."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/v2/contacts/lookup-by-custom-field": {
+      "get": {
+        "operationId": "Search contacts by custom field (v2)",
+        "description": "Searches for contacts that contain a specific value in a specific custom field. Returns up to 100 matching contacts.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "field_name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the custom field to search for",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "field_value",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Value of the custom field to search for",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of contacts per page (max 100)"
+          },
+          {
+            "in": "query",
+            "name": "structure",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "FLAT",
+                "NESTED"
+              ],
+              "default": "NESTED"
+            },
+            "description": "Format of custom fields in response. NESTED returns array of objects with id, field_name, field_value. FLAT returns object with field names as keys."
+          }
+        ],
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedContactsResponse"
+                }
+              }
+            },
+            "description": "Paginated list of contacts"
+          },
+          "400": {
+            "description": "Bad Request. Missing required parameters."
+          },
+          "401": {
+            "description": "Unauthorized. The contact does not belong to the authenticated client's API key."
+          },
+          "403": {
+            "description": "Forbidden. Missing authentication credentials or invalid API key."
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server."
+          }
+        }
+      }
+    },
+    "/public/whoami": {
+      "get": {
+        "operationId": "public_whoami_retrieve",
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response body"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Company": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "domain": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "company_status": {
+            "type": "string"
+          },
+          "company_custom_fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanyCustomFields"
+            }
+          },
+          "previous_status": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "status_changed_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          }
+        },
+        "required": [
+          "domain",
+          "id",
+          "previous_status",
+          "status_changed_at",
+          "updated_time"
+        ]
+      },
+      "CompanyCustomFieldPatch": {
+        "type": "object",
+        "properties": {
+          "field_name": {
+            "type": "string"
+          },
+          "field_value": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "field_name"
+        ]
+      },
+      "CompanyCustomFields": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "field_name": {
+            "type": "string"
+          },
+          "field_value": {
+            "type": "string",
+            "maxLength": 2500
+          }
+        },
+        "required": [
+          "field_name",
+          "field_value",
+          "id",
+          "updated_time"
+        ]
+      },
+      "CompanyPatchRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "company_status": {
+            "type": "string"
+          },
+          "company_custom_fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanyCustomFieldPatch"
+            }
+          }
+        }
+      },
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkedin_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "company_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "contact_custom_fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactCustomFields"
+            }
+          },
+          "origin": {
+            "type": "string"
+          },
+          "first_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_reply_received": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contact_status": {
+            "type": "string"
+          },
+          "previous_status": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "status_changed_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          }
+        },
+        "required": [
+          "first_campaign_email_sent",
+          "id",
+          "last_campaign_email_sent",
+          "last_reply_received",
+          "previous_status",
+          "status_changed_at",
+          "updated_time"
+        ]
+      },
+      "ContactCustomFieldPatch": {
+        "type": "object",
+        "properties": {
+          "field_name": {
+            "type": "string"
+          },
+          "field_value": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "field_name"
+        ]
+      },
+      "ContactCustomFields": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "field_name": {
+            "type": "string"
+          },
+          "field_value": {
+            "type": "string",
+            "maxLength": 2500
+          }
+        },
+        "required": [
+          "field_name",
+          "field_value",
+          "id",
+          "updated_time"
+        ]
+      },
+      "ContactPatchResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string"
+          },
+          "linkedin_url": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "company_id": {
+            "type": "integer"
+          },
+          "contact_custom_fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactCustomFields"
+            }
+          },
+          "origin": {
+            "type": "string"
+          },
+          "contact_status": {
+            "type": "string"
+          },
+          "first_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "last_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "last_reply_received": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "previous_status": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "status_changed_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          }
+        },
+        "required": [
+          "first_campaign_email_sent",
+          "first_name",
+          "id",
+          "last_campaign_email_sent",
+          "last_name",
+          "last_reply_received",
+          "origin",
+          "previous_status",
+          "status_changed_at",
+          "updated_time"
+        ]
+      },
+      "ContactPatchResponseV2": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string"
+          },
+          "linkedin_url": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "company_id": {
+            "type": "integer"
+          },
+          "contact_custom_fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactCustomFields"
+            }
+          },
+          "origin": {
+            "type": "string"
+          },
+          "contact_status": {
+            "type": "string"
+          },
+          "first_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "last_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "last_reply_received": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "previous_status": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "status_changed_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          }
+        },
+        "required": [
+          "first_campaign_email_sent",
+          "first_name",
+          "id",
+          "last_campaign_email_sent",
+          "last_name",
+          "last_reply_received",
+          "origin",
+          "previous_status",
+          "status_changed_at",
+          "updated_time"
+        ]
+      },
+      "ContactPostResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string"
+          },
+          "linkedin_url": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "company_id": {
+            "type": "integer"
+          },
+          "contact_custom_fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactCustomFields"
+            }
+          },
+          "origin": {
+            "type": "string"
+          },
+          "contact_status": {
+            "type": "string"
+          },
+          "first_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "last_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "last_reply_received": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "previous_status": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "status_changed_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          }
+        },
+        "required": [
+          "first_campaign_email_sent",
+          "first_name",
+          "id",
+          "last_campaign_email_sent",
+          "last_name",
+          "last_reply_received",
+          "origin",
+          "previous_status",
+          "status_changed_at",
+          "updated_time"
+        ]
+      },
+      "ContactPostResponseV2": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string"
+          },
+          "linkedin_url": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "company_id": {
+            "type": "integer"
+          },
+          "contact_custom_fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactCustomFields"
+            }
+          },
+          "origin": {
+            "type": "string"
+          },
+          "contact_status": {
+            "type": "string"
+          },
+          "first_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "last_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "last_reply_received": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "previous_status": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "status_changed_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          }
+        },
+        "required": [
+          "first_campaign_email_sent",
+          "first_name",
+          "id",
+          "last_campaign_email_sent",
+          "last_name",
+          "last_reply_received",
+          "origin",
+          "previous_status",
+          "status_changed_at",
+          "updated_time"
+        ]
+      },
+      "ContactV2": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkedin_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "company_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "contact_custom_fields": {
+            "type": "string",
+            "readOnly": true
+          },
+          "contact_custom_fields_input": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactCustomFields"
+            },
+            "writeOnly": true
+          },
+          "origin": {
+            "type": "string"
+          },
+          "first_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_reply_received": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contact_status": {
+            "type": "string"
+          },
+          "previous_status": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "status_changed_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          }
+        },
+        "required": [
+          "contact_custom_fields",
+          "first_campaign_email_sent",
+          "id",
+          "last_campaign_email_sent",
+          "last_reply_received",
+          "previous_status",
+          "status_changed_at",
+          "updated_time"
+        ]
+      },
+      "EmailCustomFields": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "field_name": {
+            "type": "string"
+          },
+          "field_value": {
+            "type": "string",
+            "maxLength": 2500
+          }
+        },
+        "required": [
+          "field_name",
+          "field_value",
+          "id",
+          "updated_time"
+        ]
+      },
+      "EmailModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "email_timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "contact_email": {
+            "type": "string",
+            "format": "email"
+          },
+          "contact_id": {
+            "type": "integer"
+          },
+          "agent_email": {
+            "type": "string",
+            "format": "email"
+          },
+          "email_type": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "body_text": {
+            "type": "string"
+          },
+          "body_html": {
+            "type": "string"
+          },
+          "campaign_id": {
+            "type": "string"
+          },
+          "campaign_name": {
+            "type": "string"
+          },
+          "interested": {
+            "type": "boolean"
+          },
+          "origin": {
+            "type": "string"
+          },
+          "custom_fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmailCustomFields"
+            }
+          }
+        },
+        "required": [
+          "email_type",
+          "id",
+          "origin",
+          "updated_time"
+        ]
+      },
+      "EmailSetInterested": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "disposition": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "email",
+          "subject"
+        ]
+      },
+      "MasterCompany": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "domain": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "company_status": {
+            "type": "string"
+          },
+          "company_custom_fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanyCustomFields"
+            }
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "previous_status": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "status_changed_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          }
+        },
+        "required": [
+          "client_id",
+          "domain",
+          "id",
+          "previous_status",
+          "status_changed_at",
+          "updated_time"
+        ]
+      },
+      "MasterContact": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string"
+          },
+          "linkedin_url": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "company_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "contact_custom_fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactCustomFields"
+            }
+          },
+          "origin": {
+            "type": "string"
+          },
+          "first_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_campaign_email_sent": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_reply_received": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contact_status": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "previous_status": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "status_changed_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          }
+        },
+        "required": [
+          "client_id",
+          "first_campaign_email_sent",
+          "id",
+          "last_campaign_email_sent",
+          "last_reply_received",
+          "previous_status",
+          "status_changed_at",
+          "updated_time"
+        ]
+      },
+      "PaginatedCompanyResponse": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "total_pages": {
+            "type": "integer"
+          },
+          "current_page": {
+            "type": "integer"
+          },
+          "page_size": {
+            "type": "integer"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Company"
+            }
+          }
+        },
+        "required": [
+          "count",
+          "current_page",
+          "page_size",
+          "results",
+          "total_pages"
+        ]
+      },
+      "PaginatedContactsResponse": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "total_pages": {
+            "type": "integer"
+          },
+          "current_page": {
+            "type": "integer"
+          },
+          "page_size": {
+            "type": "integer"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactV2"
+            }
+          }
+        },
+        "required": [
+          "count",
+          "current_page",
+          "page_size",
+          "results",
+          "total_pages"
+        ]
+      },
+      "PaginatedMasterCompanyResponse": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "total_pages": {
+            "type": "integer"
+          },
+          "current_page": {
+            "type": "integer"
+          },
+          "page_size": {
+            "type": "integer"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Company"
+            }
+          }
+        },
+        "required": [
+          "count",
+          "current_page",
+          "page_size",
+          "results",
+          "total_pages"
+        ]
+      },
+      "PaginatedMasterContactsResponse": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "total_pages": {
+            "type": "integer"
+          },
+          "current_page": {
+            "type": "integer"
+          },
+          "page_size": {
+            "type": "integer"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MasterContact"
+            }
+          }
+        },
+        "required": [
+          "count",
+          "current_page",
+          "page_size",
+          "results",
+          "total_pages"
+        ]
+      },
+      "PatchedCompanyCustomFields": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "field_name": {
+            "type": "string"
+          },
+          "field_value": {
+            "type": "string",
+            "maxLength": 2500
+          }
+        }
+      },
+      "PatchedCompanyPatchRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "company_status": {
+            "type": "string"
+          },
+          "company_custom_fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanyCustomFieldPatch"
+            }
+          }
+        }
+      },
+      "PatchedContactCustomFields": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "field_name": {
+            "type": "string"
+          },
+          "field_value": {
+            "type": "string",
+            "maxLength": 2500
+          }
+        }
+      },
+      "PatchedContactPatchRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "linkedin_url": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "company_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "origin": {
+            "type": "string"
+          },
+          "contact_status": {
+            "type": "string"
+          },
+          "contact_custom_fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactCustomFieldPatch"
+            }
+          }
+        }
+      }
+    }
+  }
+}

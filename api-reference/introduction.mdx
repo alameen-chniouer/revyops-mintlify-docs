@@ -1,0 +1,81 @@
+---
+title: API Introduction
+description: The RevyOps REST API lets you read and write contacts, companies, emails, and custom fields.
+---
+
+## Base URL
+
+```
+https://api.revyops.com
+```
+
+## Authentication
+
+All public API endpoints require a `client_id` query parameter that identifies your workspace.
+
+```http
+GET /public/contacts?client_id=YOUR_CLIENT_ID
+```
+
+Find your `client_id` in the RevyOps dashboard under **Settings → Workspace**.
+
+<Warning>
+  Treat your `client_id` like a secret. Anyone with this value can read and write data in your workspace.
+</Warning>
+
+## Versioning
+
+The API has two versions:
+
+| Version | Base Path | Notes |
+|---|---|---|
+| v1 | `/public/` | Original endpoints — still supported |
+| v2 | `/public/v2/` | Recommended — improved filtering and pagination |
+
+All new integrations should use **v2** endpoints.
+
+## Response Format
+
+All responses are JSON. Successful responses return the requested data directly or wrapped in a results array.
+
+```json
+{
+  "count": 100,
+  "next": "https://api.revyops.com/public/v2/contacts?page=2",
+  "previous": null,
+  "results": [...]
+}
+```
+
+## Error Format
+
+```json
+{
+  "detail": "Not found."
+}
+```
+
+Common HTTP status codes:
+
+| Code | Meaning |
+|---|---|
+| `200` | Success |
+| `201` | Created |
+| `204` | Deleted (no content) |
+| `400` | Bad request — check your payload |
+| `404` | Resource not found |
+| `500` | Server error |
+
+## Pagination
+
+List endpoints support pagination via `page` and `page_size` query parameters:
+
+```
+GET /public/v2/contacts?page=2&page_size=50
+```
+
+Default page size is 100. Maximum is 1000.
+
+## Rate Limits
+
+The API does not currently enforce rate limits, but avoid sending more than 10 requests per second from a single client to prevent server-side throttling.

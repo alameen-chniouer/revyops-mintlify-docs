@@ -1,0 +1,62 @@
+---
+title: HubSpot
+description: Sync contacts and companies between RevyOps and HubSpot CRM.
+---
+
+## Overview
+
+The HubSpot integration syncs contacts and companies from RevyOps into HubSpot CRM. This keeps your CRM up to date with outbound activity without manual data entry.
+
+## Prerequisites
+
+- A HubSpot account with CRM access
+- Your RevyOps `client_id`
+- HubSpot API credentials configured in RevyOps settings
+
+## Sync Flow
+
+```
+RevyOps Contact → HubSpot Contact
+RevyOps Company → HubSpot Company
+```
+
+When a contact replies or is marked interested in RevyOps, HubSpot contact properties are updated automatically.
+
+## Initial Sync
+
+The initial sync imports all existing RevyOps contacts into HubSpot in batches. Contact your RevyOps admin to trigger this if it hasn't run yet.
+
+## Webhook Events
+
+RevyOps listens for HubSpot webhook events to keep contact data in sync bidirectionally:
+
+| Event | Description |
+|---|---|
+| `contact.creation` | New HubSpot contact created |
+| `contact.propertyChange` | HubSpot contact property updated |
+| `contact.deletion` | HubSpot contact deleted |
+| `contact.merge` | Two HubSpot contacts merged |
+
+The webhook endpoint for HubSpot events:
+
+```
+https://api.revyops.com/public/hubspot-webhook/{client_id}
+```
+
+## Custom Properties
+
+RevyOps can create custom properties in HubSpot to store RevyOps-specific data such as campaign name and reply status. These are configured from the RevyOps admin settings during the initial HubSpot setup.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Contacts not appearing in HubSpot">
+    Verify HubSpot API credentials are correctly configured in RevyOps settings. Check that the contact email is valid and not duplicated in HubSpot.
+  </Accordion>
+  <Accordion title="Webhook events not received">
+    Confirm the webhook URL is registered in your HubSpot account under **Settings → Integrations → Private Apps → Webhooks**.
+  </Accordion>
+  <Accordion title="Properties not updating">
+    Ensure the custom HubSpot properties were created during the initial setup. HubSpot will reject property values for fields that don't exist in your HubSpot account.
+  </Accordion>
+</AccordionGroup>

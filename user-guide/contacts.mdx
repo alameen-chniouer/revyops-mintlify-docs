@@ -1,0 +1,64 @@
+---
+title: Contacts
+description: Manage individual prospects across all campaigns and platforms.
+---
+
+## Overview
+
+Contacts represent individual email prospects. RevyOps creates or updates a contact record each time a webhook event is received from a connected platform.
+
+## Contact Fields
+
+| Field | Description |
+|---|---|
+| **Email** | Primary identifier — must be unique per workspace |
+| **First Name / Last Name** | Prospect's name |
+| **Title** | Job title |
+| **Phone** | Phone number |
+| **Company** | Associated company record |
+| **Status** | Current contact status (e.g. Active, Unsubscribed, Bounced) |
+| **Custom Fields** | Flexible key-value fields defined per workspace |
+
+## Custom Fields
+
+Custom fields let you attach arbitrary data to contacts. Common use cases:
+
+- Industry, company size, or revenue
+- Lead score or qualification tier
+- Persona or ICP tags
+- Notes from the sales team
+
+Custom fields are created per workspace and appear on all contact records.
+
+<Note>
+  Custom field values are set via the API or automatically populated from webhook payloads when the platform includes them.
+</Note>
+
+## Searching Contacts
+
+Use the **Contacts** page search to find prospects by:
+
+- Email address
+- First or last name
+- Company domain
+- LinkedIn URL
+
+## Contact Status
+
+Contacts can have the following statuses:
+
+| Status | Meaning |
+|---|---|
+| `active` | Currently in an active campaign |
+| `replied` | Has replied to at least one email |
+| `interested` | Marked as interested |
+| `unsubscribed` | Opted out |
+| `bounced` | Email bounced |
+
+## Viewing Email History
+
+Click on any contact to see the full email thread — every outbound email and inbound reply, across all campaigns they've been part of.
+
+## Master Contact List
+
+The **Master List** view shows every contact in your workspace regardless of campaign, making it easy to spot duplicates or research a prospect's full history with your outreach.

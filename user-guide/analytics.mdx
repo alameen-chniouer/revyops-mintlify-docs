@@ -1,0 +1,56 @@
+---
+title: Analytics
+description: Understand campaign performance with aggregated metrics and A/B reporting.
+---
+
+## Campaign Stats
+
+The analytics dashboard aggregates performance data across all campaigns in your workspace. Key metrics include:
+
+<CardGroup cols={2}>
+  <Card title="Total Sent" icon="paper-plane">
+    All emails sent across every platform and campaign.
+  </Card>
+  <Card title="Reply Rate" icon="reply">
+    Percentage of sent emails that received a reply.
+  </Card>
+  <Card title="Interested Rate" icon="star">
+    Percentage of sent emails where the prospect was marked interested.
+  </Card>
+  <Card title="Bounce Rate" icon="triangle-exclamation">
+    Percentage of emails that hard or soft bounced.
+  </Card>
+</CardGroup>
+
+## Date Filtering
+
+Filter analytics by any date range using the date picker. Metrics update to reflect only activity within the selected period.
+
+Available groupings:
+- **Daily** — Day-by-day trends
+- **Weekly** — Week-over-week comparison
+- **Monthly** — Monthly rollup view
+
+## A/B Variable Reporting
+
+RevyOps supports tracking variables embedded in your campaigns (e.g. persona type, subject line variant, offer). Use the **Variable Report** to compare reply rates and interested rates across different variable values.
+
+Example: Compare `persona=founder` vs `persona=vp-sales` across the same campaign sequence.
+
+## Deliverability Metrics
+
+The **Deliverability** view breaks down metrics by sending domain and inbox:
+
+| Metric | Description |
+|---|---|
+| **Open Rate** | Emails opened ÷ emails delivered |
+| **Click Rate** | Links clicked ÷ emails delivered |
+| **Unsubscribe Rate** | Unsubscribes ÷ emails delivered |
+
+<Warning>
+  Deliverability metrics depend on tracking being enabled in your sending platform. Some platforms require opt-in for open tracking.
+</Warning>
+
+## Exporting Data
+
+Export contact or company lists as CSV from any campaign or master list view. Exports include all standard fields plus custom fields.

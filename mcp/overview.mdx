@@ -1,0 +1,60 @@
+---
+title: MCP Overview
+description: Connect Claude to your RevyOps campaign data using the Model Context Protocol.
+---
+
+## What is the RevyOps MCP Server?
+
+The RevyOps MCP (Model Context Protocol) server lets you talk to your campaign data directly inside [Claude](https://claude.ai). Once connected, you can ask Claude natural language questions about your campaigns, contacts, and deliverability — and it will query RevyOps in real time to answer.
+
+```
+You → Claude → RevyOps MCP Server → RevyOps API → Your data
+```
+
+## Example Prompts
+
+Once connected, you can ask Claude things like:
+
+- *"Show me campaign performance for last month"*
+- *"Which campaigns have the highest reply rate this week?"*
+- *"Find all contacts at acme.com"*
+- *"What's our deliverability looking like across sending domains?"*
+- *"Mark the reply from john@example.com as interested"*
+- *"Archive the SmartLead campaign called Q1 Outreach"*
+
+## Available Tools
+
+| Tool | What it does |
+|---|---|
+| `list_clients` | List available workspaces |
+| `get_campaigns` | Campaign performance metrics |
+| `get_campaign_drilldown` | Individual contacts/companies in a campaign |
+| `get_email_thread` | Full email thread with a contact |
+| `get_deliverability` | Sending domain health metrics |
+| `get_campaign_stats` | High-level campaign statistics |
+| `get_contacts_stats` | Contact-level aggregate stats |
+| `get_variable_report_variables` | Available A/B tracking variables |
+| `get_variable_report` | A/B test report grouped by tracking variables |
+| `add_campaign_note` | Add or update a note on a campaign |
+| `archive_campaign` | Archive or unarchive a campaign |
+| `search_contacts` | Search contacts by email, name, or domain |
+| `get_contact` | Full contact details including custom fields |
+| `update_contact` | Update contact fields |
+| `search_companies` | Search companies by domain or name |
+| `get_company` | Full company details including custom fields |
+| `update_company` | Update company fields |
+| `search_emails` | Search email records by campaign or contact |
+| `mark_email_interested` | Flag an email reply as interested |
+
+## Authentication
+
+The MCP server authenticates via an `X-API-KEY` header. Get your API key from **Settings → API Keys** in the RevyOps dashboard.
+
+<CardGroup cols={2}>
+  <Card title="Claude Desktop Setup" icon="desktop" href="/mcp/claude-desktop">
+    Connect to Claude Desktop app
+  </Card>
+  <Card title="Claude Code Setup" icon="terminal" href="/mcp/claude-code">
+    Connect to Claude Code CLI
+  </Card>
+</CardGroup>

@@ -1,0 +1,120 @@
+---
+title: Claude Desktop
+description: Connect the RevyOps MCP server to Claude Desktop.
+---
+
+## Prerequisites
+
+- [Claude Desktop](https://claude.ai/download) installed
+- A RevyOps API key — get one from **Settings → API Keys**
+
+---
+
+## Setup
+
+<Steps>
+  <Step title="Open Claude Desktop config">
+    Find the config file for your operating system:
+
+    **macOS:**
+    ```
+    ~/Library/Application Support/Claude/claude_desktop_config.json
+    ```
+
+    **Windows:**
+    ```
+    %APPDATA%\Claude\claude_desktop_config.json
+    ```
+
+    Create the file if it doesn't exist.
+  </Step>
+
+  <Step title="Add the RevyOps server">
+    Add the following JSON (merge with any existing MCP servers you have):
+
+    ```json
+    {
+      "mcpServers": {
+        "revyops": {
+          "type": "http",
+          "url": "https://mcp.revyops.com/mcp",
+          "headers": {
+            "X-API-KEY": "RO-your-api-key-here"
+          }
+        }
+      }
+    }
+    ```
+
+    Replace `RO-your-api-key-here` with your actual API key.
+  </Step>
+
+  <Step title="Restart Claude Desktop">
+    Quit and reopen Claude Desktop. The RevyOps tools will appear automatically in the tools panel.
+  </Step>
+
+  <Step title="Verify the connection">
+    In a new conversation, ask:
+
+    > *"List my RevyOps clients"*
+
+    Claude should respond with your available workspace(s).
+  </Step>
+</Steps>
+
+---
+
+## Multiple Workspaces
+
+If you manage multiple client workspaces, add a separate server entry per API key:
+
+```json
+{
+  "mcpServers": {
+    "revyops-client-a": {
+      "type": "http",
+      "url": "https://mcp.revyops.com/mcp",
+      "headers": { "X-API-KEY": "RO-key-for-client-a" }
+    },
+    "revyops-client-b": {
+      "type": "http",
+      "url": "https://mcp.revyops.com/mcp",
+      "headers": { "X-API-KEY": "RO-key-for-client-b" }
+    }
+  }
+}
+```
+
+Or pass a comma-separated list of keys in a single entry:
+
+```json
+{
+  "mcpServers": {
+    "revyops": {
+      "type": "http",
+      "url": "https://mcp.revyops.com/mcp",
+      "headers": {
+        "X-API-KEY": "RO-key-for-client-a,RO-key-for-client-b"
+      }
+    }
+  }
+}
+```
+
+Use `list_clients` to see all resolved workspaces, then reference them by name in your prompts.
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Tools not appearing in Claude">
+    Make sure you fully quit Claude Desktop (not just closed the window) and reopened it. On macOS, right-click the Dock icon and select **Quit**.
+  </Accordion>
+  <Accordion title="Authentication failed error">
+    Double-check your API key in **RevyOps → Settings → API Keys**. Keys must start with `RO-`.
+  </Accordion>
+  <Accordion title="Cannot connect to server">
+    Verify your internet connection and that `https://mcp.revyops.com` is reachable. If you're self-hosting, check that your MCP server is running and the URL is correct.
+  </Accordion>
+</AccordionGroup>

@@ -1,0 +1,61 @@
+---
+title: Integrations Overview
+description: Connect your outbound email platforms to RevyOps via webhooks.
+---
+
+## How Integrations Work
+
+RevyOps receives data from your sending platforms through **webhooks**. When an email is sent, replied to, or bounced, the platform sends an event to your RevyOps webhook URL. RevyOps processes that event and updates the campaign, contact, and email records in real time.
+
+```
+Sending Platform → Webhook Event → RevyOps → Campaign / Contact / Email records
+```
+
+## Webhook URL Format
+
+Each platform has a dedicated webhook endpoint:
+
+| Platform | Webhook URL |
+|---|---|
+| Instantly | `https://api.revyops.com/public/instantly-webhook/{client_id}` |
+| SmartLead | `https://api.revyops.com/public/smartlead-webhook/{client_id}` |
+| Lemlist | `https://api.revyops.com/public/lemlist-webhook/{client_id}` |
+| EmailBison | `https://api.revyops.com/public/emailbison-webhook/{client_id}` |
+| PlusVibe | `https://api.revyops.com/public/plusvibe-webhook/{client_id}` |
+| HubSpot | `https://api.revyops.com/public/hubspot-webhook/{client_id}` |
+
+Replace `{client_id}` with your workspace ID from **Settings → Workspace**.
+
+## Agency-Level Webhooks
+
+For agencies managing multiple client workspaces, global webhooks route events to the correct workspace automatically:
+
+| Platform | Global Webhook URL |
+|---|---|
+| Instantly | `https://api.revyops.com/public/global-instantly-webhook/{agency_id}` |
+| SmartLead | `https://api.revyops.com/public/global-smartlead-webhook/{agency_id}` |
+| Lemlist | `https://api.revyops.com/public/global-lemlist-webhook/{agency_id}` |
+| EmailBison | `https://api.revyops.com/public/global-emailbison-webhook/{agency_id}` |
+
+## Supported Platforms
+
+<CardGroup cols={2}>
+  <Card title="Instantly" icon="bolt" href="/integrations/instantly">
+    Connect Instantly campaigns
+  </Card>
+  <Card title="SmartLead" icon="envelope" href="/integrations/smartlead">
+    Connect SmartLead campaigns
+  </Card>
+  <Card title="Lemlist" icon="list" href="/integrations/lemlist">
+    Connect Lemlist campaigns
+  </Card>
+  <Card title="EmailBison" icon="server" href="/integrations/emailbison">
+    Connect EmailBison campaigns
+  </Card>
+  <Card title="PlusVibe" icon="circle-plus" href="/integrations/plusvibe">
+    Connect PlusVibe campaigns
+  </Card>
+  <Card title="HubSpot" icon="hubspot" href="/integrations/hubspot">
+    Sync contacts and companies to HubSpot CRM
+  </Card>
+</CardGroup>

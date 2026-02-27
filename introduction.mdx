@@ -1,0 +1,78 @@
+---
+title: Introduction
+description: RevyOps — unified outbound campaign intelligence for agencies and sales teams.
+---
+
+<img
+  className="block dark:hidden"
+  src="/logo/light.svg"
+  alt="RevyOps"
+/>
+<img
+  className="hidden dark:block"
+  src="/logo/dark.svg"
+  alt="RevyOps"
+/>
+
+## What is RevyOps?
+
+RevyOps is a campaign analytics and CRM platform built for outbound email agencies. It aggregates data from your sending platforms (Instantly, SmartLead, Lemlist, EmailBison, PlusVibe) into a single workspace, giving you unified visibility across all client campaigns.
+
+<CardGroup cols={2}>
+  <Card
+    title="Quickstart"
+    icon="rocket"
+    href="/quickstart"
+  >
+    Get your first integration running in minutes.
+  </Card>
+  <Card
+    title="Integrations"
+    icon="plug"
+    href="/integrations/overview"
+  >
+    Connect your sending platforms via webhooks.
+  </Card>
+  <Card
+    title="User Guide"
+    icon="book-open"
+    href="/user-guide/campaigns"
+  >
+    Learn how to manage campaigns, contacts, and companies.
+  </Card>
+  <Card
+    title="API Reference"
+    icon="square-terminal"
+    href="/api-reference/introduction"
+  >
+    Explore the full REST API.
+  </Card>
+</CardGroup>
+
+## Core Concepts
+
+<AccordionGroup>
+  <Accordion title="Campaigns">
+    Campaigns represent outbound email sequences running in your connected platforms. RevyOps aggregates stats (sends, replies, bounces, interested) from each platform into a normalized view.
+  </Accordion>
+  <Accordion title="Contacts">
+    Contacts are individual prospects in your campaigns. RevyOps maintains a unified contact record across all platforms, with support for custom fields and status tracking.
+  </Accordion>
+  <Accordion title="Companies">
+    Companies group contacts by their organization. Custom fields and statuses can be tracked at the company level, enabling account-based reporting.
+  </Accordion>
+  <Accordion title="Workspaces (Clients)">
+    Each workspace is an isolated client environment with its own campaigns, contacts, companies, and integrations. Agencies use workspaces to manage multiple clients.
+  </Accordion>
+</AccordionGroup>
+
+## Supported Platforms
+
+| Platform | Sends | Replies | Bounces | Interested |
+|---|---|---|---|---|
+| Instantly | ✓ | ✓ | ✓ | ✓ |
+| SmartLead | ✓ | ✓ | ✓ | ✓ |
+| Lemlist | ✓ | ✓ | ✓ | ✓ |
+| EmailBison | ✓ | ✓ | ✓ | ✓ |
+| PlusVibe | ✓ | ✓ | ✓ | ✓ |
+| HubSpot | ✓ (CRM sync) | — | — | — |
